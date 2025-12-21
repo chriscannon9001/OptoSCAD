@@ -93,6 +93,6 @@ translate([0, 7, 0]) {
 }
 ```
 
-![OptoSCAD demo_brief preview](./screenshots/OptoSCAD demo_brief preview.png)
+![OptoSCAD demo_brief preview](screenshots/OptoSCAD demo_brief preview.png)
 
 Goto the folder OptoSCAD/demo and open of the demo files in OpenSCAD to see demonstrations in more detail. The files hw_pockets.scad and hw_features.scad and hwlookup.scad have additional usage documentation inline.
