@@ -1,31 +1,40 @@
 # OptoSCAD
 Parametric 3d Printable Opto-mechanics.
 
-Plastic is always going to be second-rate for opto-mech, but it actually can do many jobs as long it's not expected to carry a heavy load or high torque, or meet interferometer precision.
+Plastic is always going to be second-rate for opto-mech, but it actually can do many jobs so long it's not expected to carry a heavy load, or meet interferometer precision.
 
-This project is all about turning opto-mech around faster and cheaper.
+This project is about opto-mech as fast and cheap as it can reasonably be.
 
 ## Installation
 
-Install OpenSCAD, find the libraries folder.
+Install OpenSCAD, find your libraries folder.
 
-Clone from git into the libraries folder. Same goes for NopSCADlib (dependency) [https://github.com/nophead/NopSCADlib](https://github.com/nophead/NopSCADlib).
+Clone OptoSCAD from git into the libraries folder. Same goes for NopSCADlib (dependency) [https://github.com/nophead/NopSCADlib](https://github.com/nophead/NopSCADlib).
+
+## Hardware Requirements
+
+* 3d Printer
+* stock of screws and nuts (e.g. M3, M4, M6)
+* stock of springs (e.g. 6x20x.4 mm and 8x20x.8mm)
+* (optional) chop saw
+* (optional) metal stock, e.g. 6mm dia (for cages) and 12.7mm dia rod or tubes (for posts) 
+* (optional) drill press and taps, i.e. if you want to thread solid rod posts
 
 ## Getting started
 
-The folder OptoSCAD/render has some example .stl files you can open in CAD or a slicer just to get a feel for some of the common variants that are easy to produce.
+The folder OptoSCAD/render has some example .stl files you can open in CAD or a slicer just to get a feel for some of the common variants.
 
 See below under Project status to find links to Thingiverse, which offers 3d views of the same rendered .stl files.
 
 Load customizer from OpenSCAD/cust/*.scad to start customizing a design.
 
-## Required hardware
+***Catalog of (mostly) working mechanics:***
 
-* 3d Printer
-* stock of screws and nuts (e.g. M3, M4, M6)
-* stock of springs (e.g. 6x20x.4 mm)
-* (optional) chop saw
-* (optional) metal bar or tube stock, e.g. 12.7mm dia (posts) and 6mm dia (cages)
+* Bolt Pattern Adapter Plates: *cust/Adapter Plates.scad*
+* Bolt Pattern Right Angle: *cust/Adapter Right Angle.scad*
+* Post Holder *cust/Post Holders.scad* (on [thingiverse](https://www.thingiverse.com/thing:7243131))
+* Cage Construction Plate *cust/Cage Plate.scad* (on [thingiverse](https://www.thingiverse.com/thing:7243140))
+* Mirror Mount with attachments for: post, clamp, cage, and HeNe: *cust/Mirror Mount.scad* (on [thingiverse](https://www.thingiverse.com/thing:7243133))
 
 ## Filaments
 
@@ -46,17 +55,9 @@ Some say composite filaments are more stable but my impression is the effect of 
 
 Bringing every form of opto-mech into the project would be a little ambitious.
 
-***Finished or mostly finished:***
+I'm working on plans for test beds for benchmarks.
 
-* Adapter Plates
-* Adapter Right Angle
-* Post Holder (on [thingiverse](https://www.thingiverse.com/thing:7243131))
-* Cage Plate (on [thingiverse](https://www.thingiverse.com/thing:7243140)
-* Mirror Mount with attachments for: post, clamp, cage, and HeNe. (on [thingiverse](https://www.thingiverse.com/thing:7243133))
-
-But the mirror mount still needs to be put in a test bed for benchmarks.
-
-***Future plans:***
+***Planned :***
 
 * Lens Mount
 * Integrating Sphere
@@ -64,7 +65,7 @@ But the mirror mount still needs to be put in a test bed for benchmarks.
 
 ## Hardware Library
 
-There are other hardware libraries out there already, but OptoSCAD includes its own hardware library. Why do that? OptoSCAD's internal hw lib is aimed at forming negatives (pockets) for trapping nuts, counterboring screws (on the low level side) and forming screw/spring adjuster sets and other things (on the high level side), all with 3d printing in mind.
+There are other hardware libraries out there already, but OptoSCAD includes its own hardware library. Why do that? OptoSCAD's internal hw lib is aimed at forming negatives (pockets) for trapping nuts, counterboring screws (on the low level side) and forming screw/spring adjuster sets and other things (on the high level side), all with 3d printing in mind. Other libraries are more low-level.
 
 Here is a brief demo snippet.
 
@@ -94,5 +95,7 @@ translate([0, 7, 0]) {
 ```
 
 ![OptoSCAD demo_brief preview](screenshots/OptoSCAD_demo_brief_preview.png)
+
+### More hardware lib demo
 
 Goto the folder OptoSCAD/demo and open of the demo files in OpenSCAD to see demonstrations in more detail. The files hw_pockets.scad and hw_features.scad and hwlookup.scad have additional usage documentation inline.

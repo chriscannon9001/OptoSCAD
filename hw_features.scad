@@ -130,7 +130,9 @@ module thumb_knob(N, OD, dent_diameter, dent_proportion, thick, chamfer, angle_r
 
 // springspec - [OD, wire, free-length, N-coils]
 module neg_adjuster_screwnutspring(screwsize, springspec, typehead=0, typenut=2, washer=false, l_compressed=0, support_thick=2, access_length=0, overhead=5, margins=def_margins) {
-    mar_gap = margins[2];
+    mar_gap = margins[3];
+    mar_loose = margins[2];
+    capture = access_length>0;
     // calculations
     Lc = (l_compressed>0) ? l_compressed : spring_length(springspec);
     h = Lc+2*(support_thick+overhead);
@@ -139,10 +141,10 @@ module neg_adjuster_screwnutspring(screwsize, springspec, typehead=0, typenut=2,
     cylinder(h=Lc, r=rad_s, center=true);
     // screw head side
     translate([0, 0, Lc/2])
-    neg_hardware(screwsize, typehead, support_thick, sink=overhead, minor_access=access_length, washer=washer, margins=margins);
+    neg_hardware(screwsize, typehead, support_thick, sink=overhead, minor_access=access_length, washer=washer, capture=capture, margins=margins);
     // nut
     rotate([180, 0, 0]) translate([0, 0, Lc/2])
-    neg_hardware(screwsize, typenut, support_thick, sink=overhead, minor_access=access_length, washer=washer, margins=margins);
+    neg_hardware(screwsize, typenut, support_thick, sink=overhead, minor_access=access_length, washer=washer, capture=capture, margins=margins);
 }
 
 module vit_adjuster_screwnutspring(screwsize, springspec, typehead=0, typenut=2, washer=false,  l_compressed=0, support_thick=2) {
@@ -236,5 +238,30 @@ module fastener_array(even, pitch, sizespec, N, L, W) {
     for (x = [startx:pitch:endx]) for (y = [starty:pitch:endy]) {
         //echo(x, y);
         translate([x, y]) children();
+    }
+}
+
+module neg_mirror_cutout(base_OD, T, dia, tol, flange, screwsize, nuttype, ss_offset, ss_position, margins=def_margins) {
+    flange_W = flange[0];
+    flange_T = flange[1];
+    rotate(ss_position) {
+    dz = (flange_W > 0 && flange_T > 0) ? + flange_T : -.05;
+    //depth = (Thick_front + .3 - dy);
+    OD1 = dia + 2*tol;
+    // oversized bore for mirror
+    translate([tol, 0, dz])
+    cylinder(h=T+.1, d=OD1);
+    // smaller bore opening to the left of the mirror, focusing stress on 2 lines
+    translate([-OD1/5, 0, dz])
+        cylinder(h=T+.1, d=dia/1.4);
+    if (flange_W > 0 && flange_T > 0) {
+        translate([0, 0, -.05])
+        cylinder(h=flange_T+.1, d=flange_W);
+    }
+    // setscrew
+    translate([0, 0, (T+dz)/2])
+        rotate([0, 90, 0])
+        rotate(180)
+        neg_hardware(screwsize, nuttype, ss_offset+dia/2+2*tol, capture=true, minor_access=T, sink=(base_OD-dia)/2-ss_offset, margins=margins);
     }
 }

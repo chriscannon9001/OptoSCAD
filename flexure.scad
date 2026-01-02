@@ -186,6 +186,18 @@ module adjuster_alongside_vit(screwsize, springspec, H, W, l_compressed, support
     translate([0, W/2+decenter, H/2]) rotate([0, 90, 0]) rotate([0, 0, 90]) vit_adjuster_screwnutspring(screwsize, springspec, l_compressed=l_compressed, support_thick=support_thick);
 }
 
+module flexure_translationxy1(length, width, height, thick1=0.8, thick2=2.) {
+    pitch = length+width;
+    xl = [0, pitch, pitch/2, pitch/2];
+    yl = [pitch/2, pitch/2, 0, pitch];
+    rl = [0, 0, 90, 90];
+    for (i=[0:3]) {
+        translate([xl[i], yl[i]])
+        rotate(rl[i])
+        flexure_translation1(length, width, height, thick1=thick1, thick2=thick2, thick3=width);
+    }
+}
+
 $fa = 1;
 $fs = 0.4;
 flexure_rotation1(10, 16, 20, 4, uncut_length=3, fillet=0.6);
