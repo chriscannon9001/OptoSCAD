@@ -137,7 +137,7 @@
             "Thickness": "[8.5, 2.5, 8.5]",
             "cage": "[6, 30, 20]",
             "cageAOI_center": "0",
-            "cage_nuttype": "3",
+            "cage_nuttype": "2",
             "cage_setscrew": "M3",
             "fastcagepreview": "true",
             "hene_screw": "M3",

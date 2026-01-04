@@ -1,6 +1,5 @@
 /* 'Lens Mount, Focal'
- * A precision mirror mount using push-pull screw-spring
- * adjusters.
+ * A lens mount with precision focal adjuster.
  *
  * Authors:
  * Chris Cannon

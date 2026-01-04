@@ -18,7 +18,7 @@ Clone OptoSCAD from git into the libraries folder. Same goes for NopSCADlib (dep
 * stock of springs (e.g. 6x20x.4 mm and 8x20x.8mm)
 * (optional) chop saw
 * (optional) metal stock, e.g. 6mm dia (for cages) and 12.7mm dia rod or tubes (for posts) 
-* (optional) drill press and taps, i.e. if you want to thread solid rod posts
+* (optional) drill press and taps, i.e. if you want to thread solid rod posts (not required)
 
 ## Getting started
 
@@ -30,8 +30,8 @@ Load customizer from OpenSCAD/cust/*.scad to start customizing a design.
 
 ***Catalog of (mostly) working mechanics:***
 
-* Bolt Pattern Adapter Plates: *cust/Adapter Plates.scad*
-* Bolt Pattern Right Angle: *cust/Adapter Right Angle.scad*
+* *cust/Adapter Plates.scad* - Bolt Pattern Adapter Plates
+* *cust/Adapter Right Angle.scad* - Bolt Pattern Right Angle
 * Post Holder *cust/Post Holders.scad* (on [thingiverse](https://www.thingiverse.com/thing:7243131))
 * Cage Construction Plate *cust/Cage Plate.scad* (on [thingiverse](https://www.thingiverse.com/thing:7243140))
 * Mirror Mount with attachments for: post, clamp, cage, and HeNe: *cust/Mirror Mount.scad* (on [thingiverse](https://www.thingiverse.com/thing:7243133))

@@ -143,7 +143,7 @@ cage = [6.35, 30, 0];
 
 cage_setscrew = "M3";
 
-cage_nuttype = 3; //[2: hex, 3: square, 4: tapped]
+cage_nuttype = 2; //[2: hex, 3: square, 4: tapped]
 
 // 0 means cage at an AOI intercepts center at the back of optic
 cageAOI_center = 0;
