@@ -8,7 +8,7 @@
 use <../hw_features.scad>
 
 // [snug, close, loose, gap]
-margins = [.06, .1, .2, .35];
+margins = [.06, .12, .24, .35];
 
 Post = 12.7;
 

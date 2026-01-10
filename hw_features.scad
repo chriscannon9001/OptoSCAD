@@ -15,7 +15,7 @@ use <hw_pockets.scad>
 // loose - better a little sloppy than risk contact
 // gap - plenty of clearance for movement
 // def_margins are probably appropriate for most FDM
-def_margins = [.06, .1, .2, .35];
+def_margins = [.06, .12, .24, .35];
 
 // neg_collar_screwnut
 // Compressing or expanding a collar.
@@ -165,23 +165,86 @@ module vit_adjuster_screwnutspring(screwsize, springspec, typehead=0, typenut=2,
         vit_hardware(screwsize, typenut, support_thick, washer=washer, TLshaft=support_thick+Lc/2);
 }
 
+// 2D sketch only, holding a rod with relief.
+// dia - diameter of rod
+// tol - dia +/- tol
+module sketch_precision_bore(dia, tol, rotation=0) {
+    rotate(rotation) {
+        OD1 = dia + 2*tol;
+        // oversized bore for mirror
+        translate([tol, 0]) circle(d=OD1);
+        // smaller relief focusing stress on 2 points
+        translate([-OD1/5, 0])
+        circle(d=dia/1.4);
+    }
+}
+
 // A cylinder rotated (y axis) by AOI
 // and intersected with a square plate
 // I.e. the cross section normal to AOI
 // is circular.
-module cylinder_wAOI(h, d, AOI, center=false, fast=false) {
+module cylinder_wAOI(h, d, AOI, center=false, fast=false, precision=false, rotation=0, margins=def_margins) {
+    tol = margins[1];
     h2 = h / cos(AOI) + d * tan(abs(AOI)) + .1;
     w = d/cos(AOI) + h*tan(abs(AOI));
     tz = center? 0 : h/2;
     tx = center? 0 : h*tan(AOI)/2;
     if (fast) translate([tx, 0, tz]) {
         rotate([0, AOI, 0])
-        cylinder(h=h2, d=d, center=true);
+        if (precision) {
+            linear_extrude(h2, center=true)
+            sketch_precision_bore(d, tol, rotation=rotation);
+        } else {
+            cylinder(h=h2, d=d, center=true);
+        }
     } else translate([tx, 0, tz]) intersection() {
         linear_extrude(h, center=true)
-        square([w, d], center=true);
+        square([w, d*1.2], center=true);
         rotate([0, AOI, 0])
-        cylinder(h=h2, d=d, center=true);
+        if (precision) {
+            linear_extrude(h2, center=true)
+            sketch_precision_bore(d, tol, rotation=rotation);
+        } else {
+            cylinder(h=h2, d=d, center=true);
+        }
+    }
+}
+
+// A mirror (or shaft) with a clamping setscrew,
+// and a relief opposite the setscrew so the
+// shaft comes down on 2 lines rather than 1.
+//
+// base_OD - outer diameter (or diagonal) of the base, used to set the length of the setscrew shaft
+// T - thickness of base
+// dia - mirror (shaft) diameter
+// tol - dia +/- tol
+// flange - [ID, T] dimensions of flange to backstop mirror, T=0 will ignore
+// screwsize - e.g. "M3", "M4" size of setscrew
+// nuttype - hardware type of nut
+// ss_offset - offset from mirror bore to nut
+// ss_position - rotation about z
+module neg_shaftsetscrew(base_OD, T, dia, tol, flange, screwsize, nuttype, ss_offset, ss_position, margins=def_margins) {
+    flange_W = flange[0];
+    flange_T = flange[1];
+    rotate(ss_position) {
+    dz = (flange_W > 0 && flange_T > 0) ? + flange_T : -.05;
+    //depth = (Thick_front + .3 - dy);
+    OD1 = dia + 2*tol;
+    // oversized bore for mirror
+    translate([tol, 0, dz])
+    cylinder(h=T+.1, d=OD1);
+    // smaller bore opening to the left of the mirror, focusing stress on 2 lines
+    translate([-OD1/5, 0, dz])
+        cylinder(h=T+.1, d=dia/1.4);
+    if (flange_W > 0 && flange_T > 0) {
+        translate([0, 0, -.05])
+        cylinder(h=flange_T+.1, d=flange_W);
+    }
+    // setscrew
+    translate([0, 0, (T+dz)/2])
+        rotate([0, 90, 0])
+        rotate(180)
+        neg_hardware(screwsize, nuttype, ss_offset+dia/2+2*tol, capture=true, minor_access=T, sink=(base_OD-dia)/2-ss_offset, margins=margins);
     }
 }
 
@@ -211,7 +274,7 @@ module neg_cage1(rod, oncenter, depth, setscrew, rad_setscrew, overhead=0, overb
         y = diag * sin(theta);
         ss_theta = is_ud? (floor(theta/180)*180+90) : theta+ss_angle;
         translate([x, y, depth/2]) {
-            cylinder_wAOI(depth, rod+2*margins[0], AOI, center=true, fast=fast||abs(AOI)<1);
+            cylinder_wAOI(depth, rod+2*margins[0], AOI, center=true, fast=fast||abs(AOI)<1, precision=true, rotation=ss_theta);
             rotate(ss_theta)
             rotate([0, 90, 0])
             rotate(r_z)
@@ -238,30 +301,5 @@ module fastener_array(even, pitch, sizespec, N, L, W) {
     for (x = [startx:pitch:endx]) for (y = [starty:pitch:endy]) {
         //echo(x, y);
         translate([x, y]) children();
-    }
-}
-
-module neg_mirror_cutout(base_OD, T, dia, tol, flange, screwsize, nuttype, ss_offset, ss_position, margins=def_margins) {
-    flange_W = flange[0];
-    flange_T = flange[1];
-    rotate(ss_position) {
-    dz = (flange_W > 0 && flange_T > 0) ? + flange_T : -.05;
-    //depth = (Thick_front + .3 - dy);
-    OD1 = dia + 2*tol;
-    // oversized bore for mirror
-    translate([tol, 0, dz])
-    cylinder(h=T+.1, d=OD1);
-    // smaller bore opening to the left of the mirror, focusing stress on 2 lines
-    translate([-OD1/5, 0, dz])
-        cylinder(h=T+.1, d=dia/1.4);
-    if (flange_W > 0 && flange_T > 0) {
-        translate([0, 0, -.05])
-        cylinder(h=flange_T+.1, d=flange_W);
-    }
-    // setscrew
-    translate([0, 0, (T+dz)/2])
-        rotate([0, 90, 0])
-        rotate(180)
-        neg_hardware(screwsize, nuttype, ss_offset+dia/2+2*tol, capture=true, minor_access=T, sink=(base_OD-dia)/2-ss_offset, margins=margins);
     }
 }

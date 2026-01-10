@@ -158,7 +158,7 @@ module flexure_translation2(length, width, height, gap1=2, gap2=1, thick1=0.8, t
         translate([-width_g/2+radius+thick1, 0, -.001]) cylinder(h=height+.002, r=radius);
         translate([width_g/2-radius-thick1, 0, -.001]) cylinder(h=height+.002, r=radius);
         translate([-width/2+radius+thick1, 0, -.001]) cylinder(h=height+.002, r=radius);
-        translate([width/2-radius-thick1, , -.001]) cylinder(h=height+.002, r=radius);
+        translate([width/2-radius-thick1, 0, -.001]) cylinder(h=height+.002, r=radius);
         translate([-width_g/2+radius+thick1, length2-radius, -.001]) cylinder(h=height+.002, r=radius);
         translate([width_g/2-radius-thick1, length2-radius, -.001]) cylinder(h=height+.002, r=radius);
         translate([width/2-radius-thick1, length2-radius, -.001]) cylinder(h=height+.002, r=radius);

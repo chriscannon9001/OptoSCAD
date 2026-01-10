@@ -16,7 +16,7 @@ use <./hwlookup.scad>
 // loose - better a little sloppy than risk contact
 // gap - plenty of clearance for movement
 // def_margins are probably appropriate for most FDM
-def_margins = [.06, .1, .2, .35];
+def_margins = [.06, .12, .24, .35];
 
 // uses a hull to slotify children on x axis
 // (need to be careful because hull can change shapes)

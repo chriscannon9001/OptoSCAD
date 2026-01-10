@@ -12,7 +12,7 @@ use <../hw_features.scad>
 vitamins = true;
 
 // [snug, close, loose, gap]
-margins = [.06, .1, .2, .35];
+margins = [.06, .12, .24, .35];
 
 Width = 50.8;
 

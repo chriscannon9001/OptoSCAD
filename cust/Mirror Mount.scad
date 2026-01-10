@@ -11,7 +11,7 @@ use <../hw_features.scad>
 use <../hw_pockets.scad>
 
 // [snug, close, loose, gap]
-margins = [.06, .1, .2, .35];
+margins = [.06, .12, .24, .35];
 
 // Rendering selection
 Render = 0; //[0:Model,1:Back-only,2:Front-only,3:Inverse hardware pockets,4:Printable1,5:Printable2]

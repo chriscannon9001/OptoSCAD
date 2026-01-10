@@ -30,11 +30,17 @@ Load customizer from OpenSCAD/cust/*.scad to start customizing a design.
 
 ***Catalog of (mostly) working mechanics:***
 
-* *cust/Adapter Plates.scad* - Bolt Pattern Adapter Plates
-* *cust/Adapter Right Angle.scad* - Bolt Pattern Right Angle
-* Post Holder *cust/Post Holders.scad* (on [thingiverse](https://www.thingiverse.com/thing:7243131))
-* Cage Construction Plate *cust/Cage Plate.scad* (on [thingiverse](https://www.thingiverse.com/thing:7243140))
-* Mirror Mount with attachments for: post, clamp, cage, and HeNe: *cust/Mirror Mount.scad* (on [thingiverse](https://www.thingiverse.com/thing:7243133))
+| Customizer                    |Post|Cage| Notes | Offsite Link |
+|-------------------------------|----|----|-------|--------------|
+| cust/Adapter Plates.scad        |   |   |       | |
+| cust/Adapter Right Angle.scad   |   |   |       | |
+| cust/Post Holders.scad          | X |   | untested| [thingiverse](https://www.thingiverse.com/thing:7243131) |
+| cust/Post Right Angle Clamp.scad| X |   | untested | |
+| cust/Cage Plate.scad            | X | X | needs work | [thingiverse](https://www.thingiverse.com/thing:7243140) |
+| cust/Mirror Mount.scad          | X | X | also on HeNe | [thingiverse](https://www.thingiverse.com/thing:7243140) |
+| cust/Lens Mount, Focal.scad     |   | X | untested | |
+| cust/Lens Mount, XY.scad        |   |   | in planning | |
+| cust/Integrating Sphere.scad    |   |   | unreleased; coming soon | |
 
 ## Filaments
 

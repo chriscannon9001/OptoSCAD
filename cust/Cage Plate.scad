@@ -9,7 +9,7 @@ use <../hw_features.scad>
 use <../hw_pockets.scad>
 
 // [snug, close, loose, gap]
-margins = [.06, .1, .2, .35];
+margins = [.06, .12, .24, .35];
 
 setscrew = "M3";
 
@@ -20,7 +20,7 @@ Depth = 50;
 
 Length = 52;
 
-Thick = 9.5;
+Thick = 11.5;
 
 // [rod, oncenter, AOI, ID]
 main_cage = [6.35, 30, 0, 25];
@@ -56,7 +56,7 @@ Length2 = 52;
 // 0 = right angle between plates
 Angle = 0;
 
-Chamfer = 8;
+Chamfer = 12;
 
 // [rod, oncenter, AOI, ID]
 right_cage = [6.35, 30, 0, 25];

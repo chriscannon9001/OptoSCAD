@@ -8,7 +8,7 @@
 vitamins = true;
 
 // [snug, close, loose, gap]
-margins = [.06, .1, .2, .35];
+margins = [.06, .12, .24, .35];
 
 // Enter nominal tube OD; actual ID = ID + 2*close
 ID = 12.7;
@@ -26,6 +26,9 @@ Cam = 20;
 lockscrew = "M5";
 
 lockscrewtype = 2; //[2: hex, 3: square, 4: tapped]
+
+// angle [deg], 0 = up
+lockscreworientation = 90;
 
 // Thickness substrate for base screw
 Base_thick = 12;
@@ -46,6 +49,7 @@ basescrewwasher = true;
 module _end_cust_() {}
 
 use <../hw_pockets.scad>
+use <../hw_features.scad>
 use <../hwlookup.scad>
 use <MCAD/regular_shapes.scad>
 
@@ -54,7 +58,7 @@ $fs=.1;
 
 rID = ID + 2*margins[1];
 w1 = 14;
-w2 = min(OD*cos(30), 22);
+w2 = min(OD*cos(30), 18);
 
 lspec = hw_hex(hw_getspec(lockscrew));
 lthick0 = lspec[1] + margins[3] + 4;
@@ -62,7 +66,7 @@ lockthick = max(lthick0, (OD-ID)/2);
 
 module LockBrace() {
     h = Height - w2/2;
-    x = Cam - ID/2 - margins[1];
+    x = Cam - ID/2 - 2*margins[1];
     translate([x, 0, h]) rotate([0, -90, 0]) {
         linear_extrude(lockthick, scale=w1/w2)
         square(w2, center=true);
@@ -72,7 +76,7 @@ module LockBrace() {
 module LockHW() {
     h = Height - w2/2;
     x = Cam - ID/2 - margins[1] - 1;
-    translate([Cam, 0, h]) rotate([0, -90, 0]) rotate([0, 0, -90])
+    translate([Cam, 0, h]) rotate([0, -90, 0]) rotate([0, 0, -lockscreworientation])
     neg_hardware(lockscrew, lockscrewtype, ID/2+2, minor_access=OD/2, margins=margins, capture=true, sink=lockthick);
 }
 
@@ -84,9 +88,12 @@ module body() {
             circle(d=OD);
         }
         // bore
-        translate([0, 0, 6]) cylinder(h=Height, d=rID);
+        //translate([0, 0, 6]) cylinder(h=Height, d=rID);
+        translate([0, 0, 6])
+        linear_extrude(Height)
+        sketch_precision_bore(ID, margins[1], 180);
         // stabilizing bore relief
-        translate([rID/4+margins[3], 0, 6]) linear_extrude(Height) square([rID/2,rID*.5], center=true);
+        //translate([rID/4+margins[3], 0, 6]) linear_extrude(Height) square([rID/2,rID*.5], center=true);
     }
 }
 

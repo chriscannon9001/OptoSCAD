@@ -12,7 +12,7 @@ use <../flexure.scad>
 vitamins = true;
 
 // [snug, close, loose, gap]
-margins = [.06, .1, .2, .35];
+margins = [.06, .12, .24, .35];
 
 /* [Cage Plate] */
 
@@ -24,7 +24,7 @@ D_plate1 = 44;
 
 L_plate1 = 50;
 
-T_plate1 = 9.5;
+T_plate1 = 11.5;
 
 // [rod, oncenter, AOI]
 Cage_rods = [6.35, 30, 0];
@@ -60,7 +60,7 @@ Setscrew_position = 90;
 /* [Flexure] */
 
 // [Length, Width, Depth, Gap]
-Flex = [22, 16, 12, 1.5];
+Flex = [22, 16, 12, 2.9];
 
 // total length of flex
 L_flexTL = 36;
@@ -136,7 +136,7 @@ difference() {
     diag = sqrt(D_plate2^2+L_plate2^2);
     translate([-span/2, 0, D_plate1/2+Flex[2]])
     rotate([0, -90, 0])
-    neg_mirror_cutout(diag, T_plate2, Diameter, Dia_tol, Flange, Setscrew_size, Setscrew_type, Setscrew_nutoffset, Setscrew_position, margins=margins);
+    neg_shaftsetscrew(diag, T_plate2, Diameter, Dia_tol, Flange, Setscrew_size, Setscrew_type, Setscrew_nutoffset, Setscrew_position, margins=margins);
     // cage rod pockets
     translate([span/2+T_plate1+.05, 0, D_plate1/2+Flex[2]])
     rotate([0, -90, 0]) {
